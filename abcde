@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <unistd.h>
+
+
+int main() {
+    pid_t p1, p2, p3, p4, p5;
+    printf("P: PID = %d\n", getpid());
+    p1 = fork();
+    if (p1 == 0) {
+        // Child 1
+        printf("c1: PID = %d, PPID = %d\n", getpid(), getppid());
+        p3 = fork();
+        if (p3 == 0) {
+            // Child 3
+            printf("c3: PID = %d, PPID = %d\n", getpid(), getppid());
+        } 
+    } else {
+        p2 = fork();
+        if (p2 == 0) {
+            // Child 2
+            printf("c2: PID = %d, PPID = %d\n", getpid(), getppid());
+            p4 = fork();
+            if (p4 == 0) {
+                // Child 4
+                printf("c4: PID = %d, PPID = %d\n", getpid(), getppid());
+            } else {
+                p5 = fork();
+                if (p5 == 0) {
+                    // Child 5
+                    printf("c5: PID = %d, PPID = %d\n", getpid(), getppid());
+                } 
+            }
+        } 
+    }
+    return 0;
+}
